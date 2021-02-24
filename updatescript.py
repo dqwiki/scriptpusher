@@ -23,8 +23,8 @@ import re
 import traceback
 import urllib.request
 
-import localconfig
-from mwclient import login
+import mwclient
+import login
 
 cookies_file = '/data/project/deltaquad-bots/int-admin-cookies.txt'
 
