@@ -14,16 +14,39 @@ You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
 along with DeltaQuadBot. If not, see <https://www.gnu.org/licenses/agpl.txt>.
 """
 
-from datetime import datetime
-import sys
+from http.cookiejar import MozillaCookieJar
+import sys, os, requests
 import platform
 import time
 import json
 import re
+import traceback
 import urllib.request
 
-import credentials
-import mwclient
+import localconfig
+from mwclient
+import login
+
+cookies_file = '/data/project/deltaquad-bots/int-admin-cookies.txt'
+
+cookie_jar = MozillaCookieJar(cookies_file)
+if os.path.exists(cookies_file):
+    # Load cookies from file, including session cookies (expirydate=0)
+    cookie_jar.load(ignore_discard=True, ignore_expires=True)
+print('We have %d cookies' % len(cookie_jar))
+
+connection = requests.Session()
+connection.cookies = cookie_jar  # Tell Requests session to use the cookiejar.
+
+masterwiki =  Site('en.wikipedia.org', pool=connection)
+print("Login status: ")
+print(masterwiki.logged_in)
+if not masterwiki.logged_in:
+	masterwiki.login(login.username,login.password)
+
+# Save cookies to file, including session cookies (expirydate=0)
+print(connection.cookies)
+cookie_jar.save(ignore_discard=True, ignore_expires=True)
 
 masterwiki =  mwclient.Site('en.wikipedia.org')
 masterwiki.login(credentials.username,credentials.password)
