@@ -47,7 +47,7 @@ if not masterwiki.logged_in:
 print(connection.cookies)
 cookie_jar.save(ignore_discard=True, ignore_expires=True)
 
-pagelist = masterwiki.pages["User:AmandaNP/scriptcopy.js"]
+pagelist = masterwiki.pages["User:AmandaNP/scriptcopy.js"].text()
 pagelist = pagelist.split("\n")
 
 for wikipage in pagelist:
