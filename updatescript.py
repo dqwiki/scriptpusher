@@ -47,10 +47,7 @@ if not masterwiki.logged_in:
 print(connection.cookies)
 cookie_jar.save(ignore_discard=True, ignore_expires=True)
 
-masterwiki =  mwclient.Site('en.wikipedia.org')
-masterwiki.login(credentials.username,credentials.password)
-
-pagelist = masterwiki.pages["Category:Requests for unblock"]
+pagelist = masterwiki.pages["User:AmandaNP/scriptcopy.js"]
 pagelist = pagelist.split("\n")
 
 for wikipage in pagelist:
